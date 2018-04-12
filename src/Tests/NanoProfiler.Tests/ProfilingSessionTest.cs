@@ -97,7 +97,7 @@ namespace EF.Diagnostics.Profiling.Tests
         public void TestProfilingSession_getCurrentStepId()
         {
             var expected = Guid.NewGuid();
-            CallContext.LogicalSetData("nano_profiler::current_profiling_step_id", expected);
+            CallContext.SetData("nano_profiler::current_profiling_step_id", expected);
 
             Assert.AreEqual(expected, ProfilingSession.ProfilingSessionContainer.CurrentSessionStepId);
         }
@@ -108,7 +108,7 @@ namespace EF.Diagnostics.Profiling.Tests
             var expected = Guid.NewGuid();
             ProfilingSession.ProfilingSessionContainer.CurrentSessionStepId = expected;
 
-            Assert.AreEqual(expected, CallContext.LogicalGetData("nano_profiler::current_profiling_step_id"));
+            Assert.AreEqual(expected, CallContext.GetData("nano_profiler::current_profiling_step_id"));
         }
 
         [Test]
@@ -144,7 +144,7 @@ namespace EF.Diagnostics.Profiling.Tests
 
             Assert.AreEqual(mockProfiler.Object, ProfilingSession.Current.Profiler);
             Assert.AreEqual(mockProfiler.Object, (mockHttpContext.Object.Items["nano_profiler::current_profiling_session"] as ProfilingSession).Profiler);
-            Assert.AreEqual(mockProfiler.Object.Id, CallContext.LogicalGetData("nano_profiler::current_profiling_session_id"));
+            Assert.AreEqual(mockProfiler.Object.Id, CallContext.GetData("nano_profiler::current_profiling_session_id"));
         }
 
         [Test]
