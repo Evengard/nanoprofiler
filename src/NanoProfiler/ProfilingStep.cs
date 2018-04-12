@@ -23,6 +23,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using EF.Diagnostics.Profiling.Timings;
 
 namespace EF.Diagnostics.Profiling
@@ -181,6 +182,10 @@ namespace EF.Diagnostics.Profiling
             if (!_isDiscarded && !_isStopped)
             {
                 DurationMilliseconds = (long)_profiler.Elapsed.TotalMilliseconds - StartMilliseconds;
+                ExclusiveDurationMilliseconds = _profiler.GetTimingSession().Timings
+                    .Where(t => t.ParentId == Id)
+                    .Aggregate(DurationMilliseconds, (current, child) => current - child.DurationMilliseconds);
+
                 _isStopped = true;
                 ProfilingSession.ProfilingSessionContainer.CurrentSessionStepId = ParentId;
 

@@ -24,6 +24,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace EF.Diagnostics.Profiling.Timings
 {
@@ -89,7 +90,23 @@ namespace EF.Diagnostics.Profiling.Timings
 
                 return base.DurationMilliseconds;
             }
-            set { base.DurationMilliseconds = value; }
+            set => base.DurationMilliseconds = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the exclusive duration milliseconds of the timing (self duration without all children)
+        /// </summary>
+        public override long ExclusiveDurationMilliseconds
+        {
+            get
+            {
+                if (_profiler == null) return base.ExclusiveDurationMilliseconds;
+                return _profiler.GetTimingSession().Timings
+                    .Where(t => t.ParentId == Id)
+                    .Aggregate(DurationMilliseconds, (current, child) => current - child.DurationMilliseconds);
+
+            }
+            set => base.ExclusiveDurationMilliseconds = value;
         }
 
         #endregion

@@ -65,6 +65,11 @@ namespace EF.Diagnostics.Profiling.Timings
         /// Gets or sets the duration milliseconds of the timing.
         /// </summary>
         long DurationMilliseconds { get; set; }
+
+        /// <summary>
+        /// Gets or sets the exclusive duration milliseconds of the timing (self duration without all children)
+        /// </summary>
+        long ExclusiveDurationMilliseconds { get; set; }
         
         /// <summary>
         /// Gets or sets the tags of the timing.

@@ -24,7 +24,6 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Runtime.Remoting.Messaging;
 using System.Threading;
 using System.Linq;
 
@@ -85,12 +84,12 @@ namespace EF.Diagnostics.Profiling
             {
                 if (value == null)
                 {
-                    CallContext.LogicalSetData(CurrentProfilingSessionIdCacheKey, null);
+                    CallContext.SetData(CurrentProfilingSessionIdCacheKey, null);
                     return;
                 }
 
                 ProfilingSessionStore.TryAdd(value.Profiler.Id, new WeakReference(value));
-                CallContext.LogicalSetData(CurrentProfilingSessionIdCacheKey, (Guid?)value.Profiler.Id);
+                CallContext.SetData(CurrentProfilingSessionIdCacheKey, (Guid?)value.Profiler.Id);
             }
         }
 
@@ -99,8 +98,8 @@ namespace EF.Diagnostics.Profiling
         /// </summary>
         public Guid? CurrentSessionStepId
         {
-            get { return CallContext.LogicalGetData(CurrentProfilingStepIdCacheKey) as Guid?; }
-            set { CallContext.LogicalSetData(CurrentProfilingStepIdCacheKey, value); }
+            get { return CallContext.GetData(CurrentProfilingStepIdCacheKey) as Guid?; }
+            set { CallContext.SetData(CurrentProfilingStepIdCacheKey, value); }
         }
 
         /// <summary>

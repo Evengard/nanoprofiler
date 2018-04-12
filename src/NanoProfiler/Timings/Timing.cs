@@ -89,6 +89,11 @@ namespace EF.Diagnostics.Profiling.Timings
         public virtual long DurationMilliseconds { get; set; }
 
         /// <summary>
+        /// Gets or sets the duration milliseconds of the timing except all children
+        /// </summary>
+        public virtual long ExclusiveDurationMilliseconds { get; set; }
+
+        /// <summary>
         /// Gets or sets the tags of this timing.
         /// </summary>
         public TagCollection Tags { get; set; }

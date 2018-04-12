@@ -38,7 +38,7 @@ namespace EF.Diagnostics.Profiling.Storages
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable")]
     public abstract class ProfilingStorageBase : IProfilingStorage
     {
-        private static readonly slf4net.ILogger Logger = slf4net.LoggerFactory.GetLogger(typeof(ProfilingStorageBase));
+        private static readonly log4net.ILog Logger = log4net.LogManager.GetLogger(typeof(ProfilingStorageBase));
 
         private readonly ConcurrentQueue<ITimingSession> _sessionQueue = new ConcurrentQueue<ITimingSession>();
         private Thread _workerThread;

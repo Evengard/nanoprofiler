@@ -37,7 +37,7 @@ namespace EF.Diagnostics.Profiling
     /// </summary>
     public sealed class ProfilingSession : MarshalByRefObject
     {
-        private static readonly slf4net.ILogger Logger = slf4net.LoggerFactory.GetLogger(typeof(ProfilingSession));
+        private static readonly log4net.ILog Logger = log4net.LogManager.GetLogger(typeof(ProfilingStorageBase));
 
         private static IProfilingSessionContainer _profilingSessionContainer;
         private static IProfilingStorage _profilingStorage;
@@ -262,7 +262,7 @@ namespace EF.Diagnostics.Profiling
 
         private static void HandleException(Exception ex, object origin)
         {
-            Logger.Error(ex, "Unexpected exception thrown from {0}: {1}", origin, ex.Message);
+            Logger.Error($"Unexpected exception thrown from {origin}: {ex.Message}", ex);
         }
 
         private static void InitializeConfigurationFromConfig()
